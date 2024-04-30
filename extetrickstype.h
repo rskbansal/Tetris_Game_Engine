@@ -30,6 +30,6 @@ typedef xtetricksSType *ExtetricksSType;
 
 #include "a2version2.tab.h"
 
-extern ExtetricksSType NewSymbol(char *lexeme, yytoken_kind_t token);
+extern ExtetricksSType NewSymbol(char *lexeme, enum yytokentype token); // yytoken_kind_t token);
 
 #endif /* ndef EXTETRICKSTYPE_H */

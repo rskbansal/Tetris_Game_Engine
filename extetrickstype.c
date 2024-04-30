@@ -6,14 +6,10 @@
 #include <error.h>
 #include <errno.h>
 
-ExtetricksSType NewSymbol(char *lexeme, yytoken_kind_t token) {
+extern ExtetricksSType NewSymbol(char *lexeme, enum yytokentype token) {
 	ExtetricksSType newSymbol = (ExtetricksSType) malloc(sizeof(xtetricksSType));
 	newSymbol->literalName = (char*) malloc(strlen(lexeme)+1);
 	strcpy(newSymbol->literalName,lexeme);
-	switch(token) {
-		case NUM : newSymbol->value.IntValue = atoi(lexeme); break; /* TODO: floats etc. */
-		case ID : newSymbol->value.StringValue = newSymbol->literalName; break;
-		default : break;
-	}
+	newSymbol->value.StringValue = newSymbol->literalName;
 	return newSymbol;
 }
