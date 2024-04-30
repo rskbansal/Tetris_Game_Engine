@@ -18,8 +18,6 @@ speed_increase_factor=1
 #
 speed_decrease_factor=1
 #
-difficulty=1
-#
 direction=1
 #
 shadow=0
