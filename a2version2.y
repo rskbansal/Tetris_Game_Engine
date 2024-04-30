@@ -23,20 +23,21 @@ int yywrap()
 }
 	
 char* indent(char* body) {
-	char* ans = malloc(1024);
-	memset(ans, 0, 1024);
+	char* buff = malloc(1024);
+	memset(buff, 0, 1024);
 	char* line = strtok(body, "\n");
 	while(line != NULL) {
-		sprintf(ans, "%s    %s\n", ans, line);
+		sprintf(buff, "%s    %s\n", buff, line);
 		line = strtok(NULL, "\n");
 	}
 	free(body);
-	return ans;
+	return buff;
 }
+
 const char *verbatim="import sys\nsys.path.append('../')\nfrom game_engine.engine import *\n";
 const char *verbatim1="import sys\nsys.path.append('../')\nfrom game_engine.engine import *\nfrom game_engine.board import *\nfrom game_engine.allextetrominoes import *\nfrom game_engine.shape import *\n";
-const char* main_func="if __name__ == '__main__':\n\ttetris_engine = TetrisEngine()\n";
-const char*object_name="tetris_engine";
+const char *main_func="if __name__ == '__main__':\n\ttetris_engine = TetrisEngine()\n";
+const char *object_name="tetris_engine";
 	
 %}
 	
