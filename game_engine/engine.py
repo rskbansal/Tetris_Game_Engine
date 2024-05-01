@@ -34,8 +34,7 @@ class TetrisEngine:
 		self.width = width															# Essential and programmable
 		self.height = height	
 		self.bg = bg
-		self.fg = fg
-		self.move_down_duration=500											# Essential and programmable
+		self.fg = fg										# Essential and programmable
 		self.text_area = tk.Text(										# Essential and partially programmable
 															self.window,			# fixed unless you populate more components
 															wrap=tk.CHAR,			# programmable, please find some way not to let it wrap
@@ -55,6 +54,7 @@ class TetrisEngine:
 		self.window.bind("<space>",self.drop_piece)							# callback
 		self.update_duration = update_duration		# Progrmmable, and its progression too
 		self.window.after(self.update_duration, lambda: self.update_step())	# callback															# Progrmmable, and its progression too
+		self.move_down_duration=500	
 		self.window.after(self.move_down_duration, lambda: self.move_down_step()) # callback
 		self.default_cursor = (0,int(self.board.width/2-1))			# Programmable. Where the new piece appears
 		self.cursor = self.default_cursor												# State variable.
