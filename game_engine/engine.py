@@ -175,7 +175,7 @@ class TetrisEngine:
 		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Slow-down", command=self.slow_down)
 		extetris_menu.add_separator()
-		extetris_menu.add_command(label="Increase Difficulty", command=self.increase_difficulty(False,False,True))
+		extetris_menu.add_command(label="Increase Difficulty", command=lambda: self.increase_difficulty(False, False, True))
 		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Save state", command=self.save_file)
 		extetris_menu.add_separator()
