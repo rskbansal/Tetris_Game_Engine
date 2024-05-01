@@ -55,13 +55,11 @@ PRIMITIVE : ID '=' EXPR NEWLINE PRIMITIVE {
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				sprintf($$->value.StringValue, "%s = %s\n%s", $1->value.StringValue, $3->value.StringValue, $5->value.StringValue);
-				// printf("PRIMITIVE -> ID '=' EXPR NEWLINE PRIMITIVE\n"); 
 			}
 			| { 
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				strcpy($$->value.StringValue, "");
-				// printf("PRIMITIVE -> #\n"); 
 			}
 					;
 	
@@ -69,71 +67,60 @@ ENGINE : '[' PLAY ']' {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 			sprintf($$->value.StringValue, "if __name__ == '__main__':\n\ttetris_engine = TetrisEngine()\n");
-			// printf("ENGINE -> '[' PLAY ']'\n"); 
 		}
 		| '[' PLAY WITH PARAM PARAMLIST ']' { 
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 			sprintf($$->value.StringValue, "if __name__ == '__main__':\n\ttetris_engine = TetrisEngine(%s%s)\n", $4->value.StringValue, $5->value.StringValue);
-			// printf("ENGINE -> '[' PLAY WITH PARAM PARAMLIST ']'\n"); 
 		};
 	
 FUNCTIONS : FUNCTION NEWLINE FUNCTIONS { 
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				sprintf($$->value.StringValue, "%s\n%s", $1->value.StringValue, $3->value.StringValue);
-				// printf("FUNCTIONS -> FUNCTION NEWLINE FUNCTIONS\n"); 
 			}
 			| {
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				strcpy($$->value.StringValue, "");
-				// printf("FUNCTIONS -> #\n"); 
 			};
 FUNCTION : '{' ID BODY '}'{ 
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				char* body = indent($3->value.StringValue);
 				sprintf($$->value.StringValue, "def %s():\n%s", $2->value.StringValue, body);
-				// printf("FUNCTION -> '{' ID BODY '}'\n"); 
 			};
 	
 BODY : STATEMENT BODY { 
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 			sprintf($$->value.StringValue, "%s\n%s", $1->value.StringValue, $2->value.StringValue);
-			// printf("BODY -> STATEMENT BODY\n"); 
 		}
 		| STATEMENT { 
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 			sprintf($$->value.StringValue, "%s", $1->value.StringValue);
-			// printf("BODY -> STATEMENT\n"); 
 		};
 	
 STATEMENT : IFSTATEMENT { 
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				sprintf($$->value.StringValue, "%s", $1->value.StringValue);
-				// printf("%s", $1->value.StringValue); 
 			}
 			| WHILELOOP { 
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				sprintf($$->value.StringValue, "%s", $1->value.StringValue);
-				// printf("%s", $1->value.StringValue); 
 			}
 			| ID '=' EXPR {
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 				sprintf($$->value.StringValue, "%s = %s", $1->value.StringValue, $3->value.StringValue); 
-				// printf("STATEMENT -> ID '=' EXPR: %s\n", $$->value.StringValue); 
 			}
 			| RETURN EXPR { 
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				sprintf($$->value.StringValue, "return %s", $2->value.StringValue);
-				// printf("STATEMENT -> RETURN EXPR\n"); 
 			}
 			;
 	
@@ -142,7 +129,6 @@ IFSTATEMENT : IF '(' EXPR ')' THEN BODY END {
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 				char* stm = indent($6->value.StringValue);
 				sprintf($$->value.StringValue, "if %s :\n%s", $3->value.StringValue, stm); 
-				// printf("IFSTATEMENT -> IF '(' EXPR ')' THEN STATEMENT END\n"); 
 			}
 			| IF '(' EXPR ')' THEN STATEMENT ELSE STATEMENT END {
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
@@ -150,7 +136,6 @@ IFSTATEMENT : IF '(' EXPR ')' THEN BODY END {
 				char* stm1 = indent($6->value.StringValue);
 				char* stm2 = indent($8->value.StringValue);
 				sprintf($$->value.StringValue, "if %s :\n%selse:\n%s", $3->value.StringValue, stm1, stm2); 
-				// printf("IFSTATEMENT -> IF '(' EXPR ')' THEN STATEMENT ELSE STATEMENT END\n"); 
 			}
 			;
 	
