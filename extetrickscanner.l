@@ -24,6 +24,12 @@ or	{ fprintf(stderr,"%d.",11); return OR; }
 and	{ fprintf(stderr,"%d.",12); return AND; }
 not	{ fprintf(stderr,"%d.",13); return NOT; }
 neg	{	fprintf(stderr,"%d.",14); return NEG; }
+neq	{ fprintf(stderr,"%d.",21); return NEQ; }
+eq	{ fprintf(stderr,"%d.",22); return EQ; }
+gt	{ fprintf(stderr,"%d.",23); return GT; }
+lt	{ fprintf(stderr,"%d.",24); return LT; }
+geq	{ fprintf(stderr,"%d.",25); return GEQ; }
+leq	{ fprintf(stderr,"%d.",26); return LEQ; }
 play	{ fprintf(stderr,"%d.",15); return PLAY; }
 [A-Za-z][A-Za-z0-9_]* { yylval = NewSymbol(yytext, ID); fprintf(stderr,"%d.",16); return ID; }
 [0-9][0-9]*		  { yylval = NewSymbol(yytext,NUM); fprintf(stderr,"%d.",17); return NUM; }

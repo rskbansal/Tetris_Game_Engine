@@ -40,7 +40,7 @@ const char *object_name="tetris_engine";
 	
 %}
 	
-%token SECTION1 SECTION2 SECTION3 NEWLINE NUM ID IF THEN ELSE END WHILE CALL WITH OR AND NOT NEG PLAY RETURN EQ
+%token SECTION1 SECTION2 SECTION3 NEWLINE NUM ID IF THEN ELSE END WHILE CALL WITH OR AND NOT NEG PLAY RETURN EQ NEQ GT LT GEQ LEQ
 	
 %%
 START :  SECTION1 NEWLINE PRIMITIVE SECTION2 NEWLINE FUNCTIONS SECTION3 NEWLINE ENGINE  { 
@@ -194,8 +194,51 @@ ARITH1 : '+' TERM ARITH1 {
 		| OR TERM ARITH1 {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
-			sprintf($$->value.StringValue, " || %s%s", $2->value.StringValue, $3->value.StringValue); 
+			sprintf($$->value.StringValue, " or %s%s", $2->value.StringValue, $3->value.StringValue); 
 			}
+
+		| AND TERM ARITH1 {
+			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
+			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
+			sprintf($$->value.StringValue, " and %s%s", $2->value.StringValue, $3->value.StringValue); 
+			}
+
+		| EQ TERM ARITH1 {
+			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
+			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
+			sprintf($$->value.StringValue, " == %s%s", $2->value.StringValue, $3->value.StringValue); 
+			}
+
+		| NEQ TERM ARITH1 {
+			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
+			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
+			sprintf($$->value.StringValue, " != %s%s", $2->value.StringValue, $3->value.StringValue); 
+			}
+
+		| GT TERM ARITH1 {
+			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
+			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
+			sprintf($$->value.StringValue, " > %s%s", $2->value.StringValue, $3->value.StringValue); 
+			}
+
+		| LT TERM ARITH1 {
+			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
+			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
+			sprintf($$->value.StringValue, " < %s%s", $2->value.StringValue, $3->value.StringValue); 
+			}
+
+		| GEQ TERM ARITH1 {
+			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
+			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
+			sprintf($$->value.StringValue, " >= %s%s", $2->value.StringValue, $3->value.StringValue); 
+			}
+
+		| LEQ TERM ARITH1 {
+			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
+			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
+			sprintf($$->value.StringValue, " <= %s%s", $2->value.StringValue, $3->value.StringValue); 
+			}
+
 		| {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
