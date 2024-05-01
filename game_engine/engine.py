@@ -212,7 +212,7 @@ class TetrisEngine:
 		if decrease_hold:
 			self.hold_limit = max(0, self.hold_limit - 1)
 		if increase_speed:
-			self.move_down_duration = int(self.move_down_duration * 1.2 )
+			self.move_down_duration = int(self.move_down_duration * 0.6 )
 		
 	def move_piece(self,direction):
 		if(direction=='LEFT'):
