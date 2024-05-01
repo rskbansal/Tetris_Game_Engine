@@ -81,7 +81,7 @@ class TetrisEngine:
 		if current_label == "Pause":
 			self.extetris_menu.entryconfigure("Pause", label="Resume")
 		else:
-			self.extetris_menu.entryconfigure("Pause", label="Pause")
+			self.extetris_menu.entryconfigure("Resume", label="Pause")
 	
 	def rotate_CW(self, event):
 		self.temp_rotations_limit = self.temp_rotations_limit - 1
@@ -177,7 +177,7 @@ class TetrisEngine:
 		menu = tk.Menu(self.window)
 		self.window.config(menu=menu)
 
-		self.self.extetris_menu = tk.Menu(menu)
+		self.extetris_menu = tk.Menu(menu)
 		menu.add_cascade(label="EXtendedTETRIckS", menu=self.extetris_menu)
 		self.extetris_menu.add_command(label="New Game", command=self.new_game)
 		self.extetris_menu.add_separator()
