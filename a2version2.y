@@ -34,8 +34,7 @@ char* indent(char* body) {
 	return buff;
 }
 
-const char *verbatim="import sys\nsys.path.append('../')\nfrom game_engine.engine import *\n";
-const char *verbatim1="import sys\nsys.path.append('../')\nfrom game_engine.engine import *\nfrom game_engine.board import *\nfrom game_engine.allextetrominoes import *\nfrom game_engine.shape import *\n";
+const char *imports="from engine import *\n";
 const char *main_func="if __name__ == '__main__':\n\ttetris_engine = TetrisEngine()\n";
 const char *object_name="tetris_engine";
 	
@@ -47,16 +46,10 @@ const char *object_name="tetris_engine";
 START :  SECTION1 NEWLINE PRIMITIVE SECTION2 NEWLINE FUNCTIONS SECTION3 NEWLINE ENGINE  { 
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char));
-			sprintf($$->value.StringValue, "%s\n#PRIMITIVE:\n%s\n#FUNCTIONS:\n%s\n#ENGINE:\n%s\n", verbatim,$3->value.StringValue, $6->value.StringValue, $9->value.StringValue);
+			sprintf($$->value.StringValue, "%s\n#PRIMITIVE:\n%s\n#FUNCTIONS:\n%s\n#ENGINE:\n%s\n", imports,$3->value.StringValue, $6->value.StringValue, $9->value.StringValue);
 
 			printf("%s\n", $$->value.StringValue); 
 		};
-/* VERBATIM: {
-	$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
-	$$->value.StringValue = (char*)malloc(1024*sizeof(char));
-	sprintf($$->value.StringValue, "%s", verbatim);
-	//printf("%s\n", $$->value.StringValue);
-} */
 	
 PRIMITIVE : ID '=' EXPR NEWLINE PRIMITIVE { 
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
