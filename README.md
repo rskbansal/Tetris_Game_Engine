@@ -4,13 +4,30 @@ This project is a part of the course CS F363 - Compiler Construction at BITS Pil
 ## Installation & Running
 - Install all the Python dependencies using `pip`
     ```bash
-    pip install -r requirements.txt
+    pip install numpy
+    pip install tk
     ```
 
-- `make clean` to remove all the previously generated files
+- `make clean` removes previously generated redundant files
 
-- `make build` to build the essential files
+- `make build` builds the essential files needed for execution
 
-- `make tests` to run the sample tests
+- `make tests` runs the sample tests provided
 
-- `python3 game.py` to start playing
+- `make run` begins the execution to start playing
+
+## Specifications of the engine
+- Initial rotation limit is 18. After that the game is over.
+- Initial height and 
+- The player can define the height and width of the game console from the file testinput.tetris.
+- 
+
+## Added features
+- ### Increase difficulty :
+    - Rotation Limit - decreases rotation limit to 0.6 of earlier
+    - Increase Speed - by decreasing the 
+
+When the player increases the difficulty from the drop-down menu of the game. It does the above mentioned two changes.
+
+- ### Colour changes
+- 

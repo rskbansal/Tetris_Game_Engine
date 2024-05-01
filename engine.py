@@ -77,6 +77,11 @@ class TetrisEngine:
 	
 	def toggle_pause_status(self):
 		self.pauseStatus = not(self.pauseStatus)
+		current_label = self.extetris_menu.entrycget("Pause", "label")
+		if current_label == "Pause":
+			self.extetris_menu.entryconfigure("Pause", label="Resume")
+		else:
+			self.extetris_menu.entryconfigure("Pause", label="Pause")
 	
 	def rotate_CW(self, event):
 		self.temp_rotations_limit = self.temp_rotations_limit - 1
