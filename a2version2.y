@@ -40,7 +40,7 @@ const char *object_name="tetris_engine";
 	
 %}
 	
-%token SECTION1 SECTION2 SECTION3 NEWLINE NUM ID IF THEN ELSE END WHILE CALL WITH OR AND NOT NEG PLAY RETURN
+%token SECTION1 SECTION2 SECTION3 NEWLINE NUM ID IF THEN ELSE END WHILE CALL WITH OR AND NOT NEG PLAY RETURN EQ
 	
 %%
 START :  SECTION1 NEWLINE PRIMITIVE SECTION2 NEWLINE FUNCTIONS SECTION3 NEWLINE ENGINE  { 
@@ -144,7 +144,6 @@ WHILELOOP : WHILE '(' EXPR ')' BODY END {
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 				char* stm = indent($5->value.StringValue);
 				sprintf($$->value.StringValue, "while %s :\n%s", $3->value.StringValue, stm);
-				// printf("WHILELOOP -> WHILE '(' EXPR ')' STATEMENT END\n"); 
 			}
 					;
 	
@@ -152,13 +151,11 @@ EXPR : ARITHLOGIC {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 			sprintf($$->value.StringValue, "%s", $1->value.StringValue); 
-			// printf("EXPR -> ARITHLOGIC: %s\n", $$->value.StringValue); 
 		}
 			| '[' CALL ID ']' { 
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char));
 			sprintf($$->value.StringValue, "%s()", $3->value.StringValue);
-			// printf("EXPR -> '[' CALL ID ']'\n"); 
 		}
 		| '[' CALL ID WITH PARAM PARAMLIST ']' { 
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType));
@@ -168,7 +165,6 @@ EXPR : ARITHLOGIC {
 			strcat(object_cat, ".");
 			strcat(object_cat, $3->value.StringValue);
 			sprintf($$->value.StringValue, "%s(%s%s)", object_cat, $5->value.StringValue, $6->value.StringValue);
-			// printf("EXPR -> '[' CALL ID WITH PARAM PARAMLIST ']'\n"); 
 		}
 		;
 	
@@ -176,7 +172,6 @@ ARITHLOGIC : TERM ARITH1 {
 				$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 				$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 				sprintf($$->value.StringValue, "%s%s", $1->value.StringValue, $2->value.StringValue); 
-				// printf("ARITHLOGIC -> TERM ARITH1: %s\n", $$->value.StringValue); 
 			}
 			;
 	
@@ -184,32 +179,27 @@ TERM : FACTOR TERM1 {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 			sprintf($$->value.StringValue, "%s%s", $1->value.StringValue, $2->value.StringValue); 
-			// printf("TERM -> FACTOR TERM1: %s\n", $$->value.StringValue); 
 		};
 	
 ARITH1 : '+' TERM ARITH1 {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 			sprintf($$->value.StringValue, " + %s%s", $2->value.StringValue, $3->value.StringValue); 
-			// printf("ARITH1 -> '+' TERM ARITH1: %s\n", $$->value.StringValue); 
 		}
 		| '-' TERM ARITH1 {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 			sprintf($$->value.StringValue, " - %s%s", $2->value.StringValue, $3->value.StringValue); 
-			// printf("ARITH1 -> '-' TERM ARITH1\n"); 
 			}
 		| OR TERM ARITH1 {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 			sprintf($$->value.StringValue, " || %s%s", $2->value.StringValue, $3->value.StringValue); 
-			// printf("ARITH1 -> OR TERM ARITH1\n"); 
 			}
 		| {
 			$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); 
 			$$->value.StringValue = (char*)malloc(1024*sizeof(char)); 
 			strcpy($$->value.StringValue, "");
-			// strcpy($$->value.StringValue, ""); printf("ARITH1 -> #\n"); 
 			};
 	
 FACTOR : ID {$$ = (ExtetricksSType)malloc(sizeof(xtetricksSType)); $$->value.StringValue = (char*)malloc(1024*sizeof(char)); strcpy($$->value.StringValue, $1->value.StringValue); 
