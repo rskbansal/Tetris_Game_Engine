@@ -32,7 +32,7 @@ Section2
 #
 { run test1 = [call move_piece with direction=1 ] }
 #
-{Func3 while( 3 + 5 geq 8 and 6 leq 2) while( 3+ 5 lt 8)test2=5 end end}
+{Func3 while( 3 + 5 geq 8 also 6 leq 2) while( 3+ 5 lt 8)test2=5 end end}
 #
 Section3
 #
