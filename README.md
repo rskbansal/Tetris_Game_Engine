@@ -9,4 +9,6 @@ This project is a part of the course CS F363 - Compiler Construction at BITS Pil
 
 - `make clean` to remove all the previously generated files
 
-- `make build`
+- `make build` to build the essential files
+
+- `make clean` to remove built files

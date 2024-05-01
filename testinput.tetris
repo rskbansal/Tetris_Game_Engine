@@ -4,10 +4,6 @@ height = 10
 #
 width = 20
 #
-Somename = 20
-#
-Someothername = 1
-#
 difficulty=1
 #
 fg_color=1
@@ -34,4 +30,4 @@ Section2
 #
 Section3
 #
-[ play with height = Somename width = width]
+[ play with height = height width = width]
