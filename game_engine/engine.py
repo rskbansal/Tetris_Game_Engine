@@ -131,6 +131,8 @@ class TetrisEngine:
 		if self.board.collision(self.piece.matrix,self.cursor) or self.temp_rotations_limit==0:
 			string_board = self.render().split('\n')
 			string_board[int(self.height/5)] = 'Game Over'
+			if self.temp_rotations_limit==0:
+				string_board[int(self.height/5)+1] = 'Rotations Limit Exceeded'
 			lastmessage = ""
 			for row in range(self.height):
 				lastmessage = lastmessage + string_board[row].strip() + '\n'
