@@ -30,6 +30,7 @@ gt	{ fprintf(stderr,"%d.",23); return GT; }
 lt	{ fprintf(stderr,"%d.",24); return LT; }
 geq	{ fprintf(stderr,"%d.",25); return GEQ; }
 leq	{ fprintf(stderr,"%d.",26); return LEQ; }
+also	{ fprintf(stderr,"%d.",27); return ALSO; }
 play	{ fprintf(stderr,"%d.",15); return PLAY; }
 [A-Za-z][A-Za-z0-9_]* { yylval = NewSymbol(yytext, ID); fprintf(stderr,"%d.",16); return ID; }
 [0-9][0-9]*		  { yylval = NewSymbol(yytext,NUM); fprintf(stderr,"%d.",17); return NUM; }
