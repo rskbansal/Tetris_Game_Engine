@@ -177,7 +177,7 @@ class TetrisEngine:
 		menu = tk.Menu(self.window)
 		self.window.config(menu=menu)
 
-		self.self.extetris_menu = tk.Menu(menu)
+		self.extetris_menu = tk.Menu(menu)
 		menu.add_cascade(label="EXtendedTETRIckS", menu=self.extetris_menu)
 		self.extetris_menu.add_command(label="New Game", command=self.new_game)
 		self.extetris_menu.add_separator()
