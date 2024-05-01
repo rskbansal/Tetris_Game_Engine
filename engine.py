@@ -22,19 +22,26 @@ from shape import Shape
 from time import time, sleep
 from copy import copy, deepcopy
 
+color = {
+	1 : 'red',
+	2 : 'green',
+	3 : 'blue',
+	4 : 'yellow',
+}
+
 class TetrisEngine:
-	def __init__(self, height=20, width=10, extetromino_distribution=range(1,20), update_duration=100, move_down_duration=1000,bg='light gray',fg='blue',rotations_limit=18):
+	def __init__(self, height=20, width=10, extetromino_distribution=range(1,20), update_duration=100, move_down_duration=1000,bg='light gray',fg=3,rotations_limit=20):
 		self.window = tk.Tk()											  # fixed
-		self.window.title("Pro Tetris")		  # Programmable, inconsequential
+		self.window.title("CS F363 - Compiler Construction")		  # Programmable, inconsequential
 		self.extetromino_distribution = extetromino_distribution	# Programmable:
 			# Controls the number, variety and distribution.
 			# This can be changed to range(1,74) for the give allextetrominoes module. Or to your list too.
 			# If you want some pieces to have more frequency than others, then repeat their index in this 
 			# list, and in that case give a proper enumerated tuple or a list, not a range or something
-		self.width = height															# Essential and programmable
-		self.height = width
+		self.width = width															# Essential and programmable
+		self.height = height
 		self.bg = bg
-		self.fg = fg														# Essential and programmable
+		self.fg = color[fg]														# Essential and programmable
 		self.text_area = tk.Text(										# Essential and partially programmable
 															self.window,			# fixed unless you populate more components
 															wrap=tk.CHAR,			# programmable, please find some way not to let it wrap
@@ -178,7 +185,7 @@ class TetrisEngine:
 		self.window.config(menu=menu)
 
 		self.extetris_menu = tk.Menu(menu)
-		menu.add_cascade(label="EXtendedTETRIckS", menu=self.extetris_menu)
+		menu.add_cascade(label="rskbansal's Tetris", menu=self.extetris_menu)
 		self.extetris_menu.add_command(label="New Game", command=self.new_game)
 		self.extetris_menu.add_separator()
 		self.extetris_menu.add_command(label="Pause", command=self.toggle_pause_status)
@@ -222,11 +229,11 @@ class TetrisEngine:
     
 	def increase_difficulty(self, increase_rotations=False, decrease_hold=False, increase_speed=False):
 		if increase_rotations:
-			self.rotations_limit = max(1, int(self.rotations_limit *0.6))
+			self.rotations_limit = max(1, int(self.rotations_limit *0.5))
 		if decrease_hold:
 			self.hold_limit = max(0, self.hold_limit - 1)
 		if increase_speed:
-			self.move_down_duration = int(self.move_down_duration * 0.6 )
+			self.move_down_duration = int(self.move_down_duration * 0.5 )
 		
 	def move_piece(self,direction):
 		if(direction=='LEFT'):
