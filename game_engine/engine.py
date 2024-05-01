@@ -79,6 +79,7 @@ class TetrisEngine:
 		self.pauseStatus = not(self.pauseStatus)
 	
 	def rotate_CW(self, event):
+		self.temp_rotations_limit = self.temp_rotations_limit - 1
 		newpiece = Shape(self.piece.matrix)
 		newpiece.rotateCW()
 		if self.board.collision(newpiece.matrix,self.cursor):
@@ -88,6 +89,7 @@ class TetrisEngine:
 			return True
 	
 	def rotate_AntiCW(self, event):
+		self.temp_rotations_limit = self.temp_rotations_limit - 1
 		newpiece = Shape(self.piece.matrix)
 		newpiece.rotateAntiCW()
 		if self.board.collision(newpiece.matrix,self.cursor):
@@ -138,7 +140,7 @@ class TetrisEngine:
 			self.window.quit()
 		else:
 			self.window.after(self.update_duration, lambda: self.update_step())
-			self.temp_rotations_limit = self.temp_rotations_limit - 1
+			
 	
 	def speed_up(self):
 		self.move_down_duration = int(numpy.floor(self.move_down_duration*0.9))
@@ -178,7 +180,7 @@ class TetrisEngine:
 		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Slow-down", command=self.slow_down)
 		extetris_menu.add_separator()
-		extetris_menu.add_command(label="Increase Difficulty", command=lambda: self.increase_difficulty(False, False, True))
+		extetris_menu.add_command(label="Increase Difficulty", command=lambda: self.increase_difficulty(True, False, True))
 		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Save state", command=self.save_file)
 		extetris_menu.add_separator()
