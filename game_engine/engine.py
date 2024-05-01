@@ -23,7 +23,7 @@ from time import time, sleep
 from copy import copy, deepcopy
 
 class TetrisEngine:
-	def __init__(self, height=20, width=10, extetromino_distribution=range(1,20), update_duration=100,bg='light gray',fg='blue'):
+	def __init__(self, height=20, width=10, extetromino_distribution=range(1,20), update_duration=100, move_down_duration=1000):
 		self.window = tk.Tk()											  # fixed
 		self.window.title("Python Text Tetris")		  # Programmable, inconsequential
 		self.extetromino_distribution = extetromino_distribution	# Programmable:
@@ -31,17 +31,15 @@ class TetrisEngine:
 			# This can be changed to range(1,74) for the give allextetrominoes module. Or to your list too.
 			# If you want some pieces to have more frequency than others, then repeat their index in this 
 			# list, and in that case give a proper enumerated tuple or a list, not a range or something
-		self.width = width															# Essential and programmable
-		self.height = height	
-		self.bg = bg
-		self.fg = fg										# Essential and programmable
+		self.width = height															# Essential and programmable
+		self.height = width														# Essential and programmable
 		self.text_area = tk.Text(										# Essential and partially programmable
 															self.window,			# fixed unless you populate more components
 															wrap=tk.CHAR,			# programmable, please find some way not to let it wrap
 															height=self.height, # fixed
 															width=2*self.width, # fixed
-															bg=self.bg,		# programmable
-															fg=self.fg,					# programmable
+															bg='light gray',		# programmable
+															fg='blue',					# programmable
 															font=('Courier New','16','bold'),		# programmable
 														)
 		self.text_area.pack(expand=tk.YES, fill=tk.BOTH)				# fixed
@@ -53,8 +51,8 @@ class TetrisEngine:
 		self.window.bind("<Right>",self.move_right)							# callback
 		self.window.bind("<space>",self.drop_piece)							# callback
 		self.update_duration = update_duration		# Progrmmable, and its progression too
-		self.window.after(self.update_duration, lambda: self.update_step())	# callback															# Progrmmable, and its progression too
-		self.move_down_duration=500	
+		self.window.after(self.update_duration, lambda: self.update_step())	# callback
+		self.move_down_duration = move_down_duration															# Progrmmable, and its progression too
 		self.window.after(self.move_down_duration, lambda: self.move_down_step()) # callback
 		self.default_cursor = (0,int(self.board.width/2-1))			# Programmable. Where the new piece appears
 		self.cursor = self.default_cursor												# State variable.
@@ -173,13 +171,12 @@ class TetrisEngine:
 		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Pause", command=self.toggle_pause_status)
 		extetris_menu.add_separator()
-		extetris_menu.add_command(label="Increase Difficulty", command=self.increase_difficulty(False,False,True))
-		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Speed-Up", command=self.speed_up)
-		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Slow-down", command=self.slow_down)
 		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Save state", command=self.save_file)
+		extetris_menu.add_separator()
+		extetris_menu.add_command(label="Exit", command=self.window.quit)
 		extetris_menu.add_separator()
 		extetris_menu.add_command(label="Quit", command=self.window.quit)
 		extetris_menu.add_separator()
