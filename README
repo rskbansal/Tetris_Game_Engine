@@ -4,22 +4,17 @@ This project is a part of the course CS F363 - Compiler Construction at BITS Pil
 ## Installation & Running
 - Install all the Python dependencies using `pip`
     ```bash
-    pip install -r requirements.txt
+    pip install numpy
+    pip install tk
     ```
 
-- For removing previously generated file
-    ```bash
-    make clean
-    ```
+- `make clean` removes previously generated redundant files
 
 - `make build` builds the essential files needed for execution
 
-- You can mention your test cases inside [testinput.tetris](./testinput.tetris) file. For running the test cases, use the following command
-    ```bash
-    make tests
-    ```
+- `make tests` runs the sample tests provided
 
-- `python3 game.py` to start playing the game
+- `make run` begins the execution to start playing
 
 ## Specifications of the engine
 - Initial rotation limit is 18. After that the game is over.
