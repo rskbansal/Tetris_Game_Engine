@@ -23,23 +23,25 @@ from time import time, sleep
 from copy import copy, deepcopy
 
 class TetrisEngine:
-	def __init__(self, height=20, width=10, extetromino_distribution=range(1,20), update_duration=100, move_down_duration=1000):
+	def __init__(self, height=20, width=10, extetromino_distribution=range(1,20), update_duration=100, move_down_duration=1000,bg='light gray',fg='blue',rotations_limit=18):
 		self.window = tk.Tk()											  # fixed
-		self.window.title("Python Text Tetris")		  # Programmable, inconsequential
+		self.window.title("Pro Tetris")		  # Programmable, inconsequential
 		self.extetromino_distribution = extetromino_distribution	# Programmable:
 			# Controls the number, variety and distribution.
 			# This can be changed to range(1,74) for the give allextetrominoes module. Or to your list too.
 			# If you want some pieces to have more frequency than others, then repeat their index in this 
 			# list, and in that case give a proper enumerated tuple or a list, not a range or something
 		self.width = height															# Essential and programmable
-		self.height = width														# Essential and programmable
+		self.height = width
+		self.bg = bg
+		self.fg = fg														# Essential and programmable
 		self.text_area = tk.Text(										# Essential and partially programmable
 															self.window,			# fixed unless you populate more components
 															wrap=tk.CHAR,			# programmable, please find some way not to let it wrap
 															height=self.height, # fixed
 															width=2*self.width, # fixed
-															bg='light gray',		# programmable
-															fg='blue',					# programmable
+															bg=self.bg,		# programmable
+															fg=self.fg,					# programmable
 															font=('Courier New','16','bold'),		# programmable
 														)
 		self.text_area.pack(expand=tk.YES, fill=tk.BOTH)				# fixed
@@ -57,6 +59,7 @@ class TetrisEngine:
 		self.default_cursor = (0,int(self.board.width/2-1))			# Programmable. Where the new piece appears
 		self.cursor = self.default_cursor												# State variable.
 		
+		self.rotations_limit = rotations_limit
 		self.new_piece()																				# This sequence is not much programmable.
 		self.text_area.insert(tk.END,self.render())
 		self.create_menu()
@@ -100,8 +103,7 @@ class TetrisEngine:
 		self.move_piece('RIGHT')
 	
 	def drop_piece(self, event):
-		while self.move_piece('DOWN'):
-			pass # Could be: nothing = "doing" # keep dropping
+		self.move_piece('DOWN')
 	
 	def move_down_step(self):
 		if not(self.move_piece('DOWN')):
@@ -124,7 +126,7 @@ class TetrisEngine:
 			return
 		self.text_area.delete(1.0,tk.END)
 		self.text_area.insert(tk.END,self.render())
-		if self.board.collision(self.piece.matrix,self.cursor):
+		if self.board.collision(self.piece.matrix,self.cursor) or self.temp_rotations_limit==0:
 			string_board = self.render().split('\n')
 			string_board[int(self.height/5)] = 'Game Over'
 			lastmessage = ""
@@ -136,6 +138,7 @@ class TetrisEngine:
 			self.window.quit()
 		else:
 			self.window.after(self.update_duration, lambda: self.update_step())
+			self.temp_rotations_limit = self.temp_rotations_limit - 1
 	
 	def speed_up(self):
 		self.move_down_duration = int(numpy.floor(self.move_down_duration*0.9))
@@ -184,7 +187,9 @@ class TetrisEngine:
 		extetris_menu.add_command(label="About", command=self.extetricks_help)
 	
 	def new_piece(self,piece=None):
-		if(piece==None): self.piece = Shape(get_any_extetromino(self.extetromino_distribution))
+		if(piece==None): 
+			self.piece = Shape(get_any_extetromino(self.extetromino_distribution))
+			self.temp_rotations_limit = self.rotations_limit
 		else: self.piece = piece
 	
 	def new_game(self):
@@ -208,7 +213,7 @@ class TetrisEngine:
     
 	def increase_difficulty(self, increase_rotations=False, decrease_hold=False, increase_speed=False):
 		if increase_rotations:
-			self.rotations_limit = max(0, self.rotations_limit - 1)
+			self.rotations_limit = max(1, int(self.rotations_limit *0.6))
 		if decrease_hold:
 			self.hold_limit = max(0, self.hold_limit - 1)
 		if increase_speed:
